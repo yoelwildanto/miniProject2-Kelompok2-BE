@@ -3,12 +3,12 @@ import productService from "../services/productService";
 
 const createProductController = async (req: Request, res: Response) => {
     try {
-        const {name, categoryId, price, quantity, description, status} = req.body
+        const {productName, categoryId, price, stock, description, statusId} = req.body;
         const numCategoryId = Number(categoryId)
         const numPrice = Number(price)
-        const numQuantity = Number(quantity)
-        // const numStatusId = Number(status)
-        const result = await productService.createProductService(name, numCategoryId, numPrice, numQuantity, description, status, req.file?.filename || '')
+        const numStock = Number(stock)
+        const numStatusId = Number(statusId)
+        const result = await productService.createProductService(productName, numCategoryId, numPrice, numStock, description, numStatusId, req.file?.filename || '')
         return res.status(200).json({
             message: "success",
             data: result
@@ -32,16 +32,12 @@ const getProductAllController = async (req: Request, res: Response) => {
     }
 }
 
-const getProductByIdController = async (req: Request, res: Response) => {
-
-}
-
 const updateProductController = async (req: Request, res: Response) => {
     try {
         const {productId} = req.params
         const parsedProductId = parseInt(productId, 10);
-        const {name, categoryId, price, quantity, description, status} = req.body
-        const result = await productService.updateProductService(name, categoryId, price, quantity, description, status, req.file?.filename || '', parsedProductId)
+        const {productName, categoryId, price, stock, description, statusId} = req.body
+        const result = await productService.updateProductService(productName, categoryId, price, stock, description, statusId, req.file?.filename || '', parsedProductId)
         return res.status(200).json({
             message: "success",
             data: result
@@ -55,6 +51,5 @@ const updateProductController = async (req: Request, res: Response) => {
 export = {
     createProductController,
     getProductAllController,
-    getProductByIdController,
     updateProductController
 }
