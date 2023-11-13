@@ -38,42 +38,41 @@ model transactions {
 }
 
 model transaction_items {
-   id        Int      @id @default(autoincrement())
-   total_quantity  Int  
-   product   products  @relation(fields: [product_id], references: [id])
-   product_id    Int
-   transaction   transactions  @relation(fields: [transaction_id], references: [id])
-   transaction_id    Int
+  id             Int          @id @default(autoincrement())
+  total_quantity Int
+  product        products     @relation(fields: [product_id], references: [id])
+  product_id     Int
+  transaction    transactions @relation(fields: [transaction_id], references: [id])
+  transaction_id Int
 }
 
 model products {
-   id        Int      @id @default(autoincrement())
-   name      String?  @db.VarChar(255)
-   price     Int
-   image   String?  @db.VarChar(255)
-   description    String?   @db.Text
-   status   String?   @db.VarChar(255)
-   quantity     Int
-   created_at   DateTime   @default(now())
-   updated_at   DateTime  
+  id          Int      @id @default(autoincrement())
+  name        String  @db.VarChar(255)
+  price       Int
+  image       String  @db.VarChar(255)
+  description String  @db.Text
+  status      String  @db.VarChar(255)
+  quantity    Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime
 
-
-   transaction_item transaction_items[] 
-   categories categories_products[]
+  transaction_item transaction_items[]
+  categories       categories_products[]
 }
 
 model categories {
-   id        Int      @id @default(autoincrement())
-   category  String?  @db.VarChar(255)
-   products categories_products[]
+  id       Int                   @id @default(autoincrement())
+  category String?               @db.VarChar(255)
+  products categories_products[]
 }
 
 model categories_products {
-   category_id  Int
-   product_id   Int
+  category_id Int
+  product_id  Int
 
-   category      categories @relation(fields: [category_id], references: [id])
-   product   products @relation(fields: [product_id], references: [id])
+  category categories @relation(fields: [category_id], references: [id])
+  product  products   @relation(fields: [product_id], references: [id])
 
   @@id([category_id, product_id])
 }
