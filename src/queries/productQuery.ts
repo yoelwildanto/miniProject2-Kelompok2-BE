@@ -2,16 +2,16 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const createProductQuery = async (name: string, category_id: number, price: number, stock: number, description: string, status: string, image: string) => {
+const createProductQuery = async (productName: string, categoryId: number, price: number, stock: number, description: string, statusId: number, image: string) => {
     try {
         const res = await prisma.products.create({
             data: {
-                name: name,
-                category_id: category_id,
+                productName: productName,
+                categoryId: categoryId,
                 price:  price,
                 stock:  stock,
                 description: description,
-                status: status,
+                statusId: statusId,
                 image:  image,
             },
         });
@@ -43,14 +43,14 @@ const findProductQuery = async (productId:number)  => {
     }
 }
 
-const updateProductQuery =async (name: string, categoryId: number, price: number, stock: number, description: string, statusId: number, image: string, productId: number) => {
+const updateProductQuery =async (productName: string, categoryId: number, price: number, stock: number, description: string, statusId: number, image: string, productId: number) => {
     try {
         const res = await prisma.products.updateMany({
             where: {
                 id: productId
             },
             data: {
-                name: name,
+                productName: productName,
                 categoryId: categoryId,
                 price:  price,
                 stock:  stock,

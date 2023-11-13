@@ -32,6 +32,10 @@ const getProductAllController = async (req: Request, res: Response) => {
     }
 }
 
+const getProductByIdController = async (req: Request, res: Response) => {
+
+}
+
 const updateProductController = async (req: Request, res: Response) => {
     try {
         const {productId} = req.params
@@ -51,5 +55,6 @@ const updateProductController = async (req: Request, res: Response) => {
 export = {
     createProductController,
     getProductAllController,
+    getProductByIdController,
     updateProductController
 }
