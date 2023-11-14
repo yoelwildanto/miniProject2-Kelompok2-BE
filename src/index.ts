@@ -1,16 +1,21 @@
 import express from "express";
 import path from "path";
+import routerProduct from"./routes/productRouter";
+// import routerCategory from "./routes/categoryRouter";
+
 import dotenv from "dotenv";
-import productRouter from "./routes/productRouter"
-
 dotenv.config({
-    path: path.resolve(__dirname, "../.env"),
-})
-const app = express()
-const port: number = Number(process.env.PORT)|| 8000;
+    path: path.resolve(__dirname, "../.env")
+});
 
-app.use("/products", productRouter)
+const port: number = Number(process.env.PORT) || 8000; 
+const app = express();
+
+app.use(express.json());
+
+app.use("/product", routerProduct);
+// app.use("/category", routerCategory)
 
 app.listen(port, () => {
-    console.log(`running on port ${port}`);
-});
+    console.log(`server started on port ${port}`);
+})
