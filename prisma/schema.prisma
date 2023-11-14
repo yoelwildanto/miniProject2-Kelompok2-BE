@@ -10,70 +10,77 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id          Int            @id @default(autoincrement())
-  username    String?        @db.VarChar(255)
-  email       String?        @db.VarChar(255)
-  password    String?        @db.VarChar(255)
-  avatar      String?        @db.VarChar(255)
-  role        roles          @relation(fields: [roleId], references: [id])
+model Roles {
+  id       Int     @id @default(autoincrement())
+  roleName String
+  user     Users[]
+}
+
+model Users {
+  id          Int    @id @default(autoincrement())
+  username    String
+  email       String
+  password    String
+  phoneNumber String
+  address     String @db.VarChar(1000)
+  avatar      String @db.VarChar(1000)
+  role        Roles  @relation(fields: [roleId], references: [id])
   roleId      Int
-  transaction transactions[]
 }
 
-model roles {
-  id   Int     @id @default(autoincrement())
-  role String? @db.VarChar(255)
-  user users[]
+model Categories {
+  id           Int        @id @default(autoincrement())
+  categoryName String
+  image        String     @db.VarChar(1000)
+  product      Products[]
 }
 
-model transactions {
-  id               Int                 @id @default(autoincrement())
-  total_quantity   Int
-  total_price      Int
-  date             DateTime            @default(now())
-  cashier          users               @relation(fields: [cashier_id], references: [id])
-  cashier_id       Int
-  transaction_item transaction_items[]
+model Status {
+  id         Int        @id @default(autoincrement())
+  statusName String
+  product    Products[]
 }
 
-model transaction_items {
-   id        Int      @id @default(autoincrement())
-   total_quantity  Int  
-   product   products  @relation(fields: [product_id], references: [id])
-   product_id    Int
-   transaction   transactions  @relation(fields: [transaction_id], references: [id])
-   transaction_id    Int
+model Products {
+  id                  Int                   @id @default(autoincrement())
+  productName         String
+  category            Categories            @relation(fields: [categoryId], references: [id])
+  categoryId          Int
+  price               Decimal               @db.Decimal(10, 0)
+  stock               Int
+  description         String                @db.VarChar(1000)
+  status              Status                @relation(fields: [statusId], references: [id])
+  statusId            Int
+  image               String                @db.VarChar(1000)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  transaction_details Transaction_Details[]
 }
 
-model products {
-   id        Int      @id @default(autoincrement())
-   name      String?  @db.VarChar(255)
-   price     Int
-   image   String?  @db.VarChar(255)
-   description    String?   @db.Text
-   status   String?   @db.VarChar(255)
-   quantity     Int
-   created_at   DateTime   @default(now())
-   updated_at   DateTime  
-
-
-   transaction_item transaction_items[] 
-   categories categories_products[]
+model Transactions {
+  id                  Int                   @id @default(autoincrement())
+  date                DateTime              @default(now())
+  totalQuantity       Int
+  totalPrice          Decimal               @db.Decimal(10, 0)
+  payment_method      Payment_Method        @relation(fields: [payment_methodId], references: [id])
+  payment_methodId    Int
+  paymentAmount       Decimal               @db.Decimal(10, 0)
+  paymentChange       Decimal               @db.Decimal(10, 0)
+  transaction_details Transaction_Details[]
 }
 
-model categories {
-   id        Int      @id @default(autoincrement())
-   category  String?  @db.VarChar(255)
-   products categories_products[]
+model Transaction_Details {
+  id            Int          @id @default(autoincrement())
+  product       Products     @relation(fields: [productId], references: [id])
+  productId     Int
+  transaction   Transactions @relation(fields: [transactionId], references: [id])
+  transactionId Int
+  quantity      Int
+  price         Decimal      @db.Decimal(10, 0)
 }
 
-model categories_products {
-   category_id  Int
-   product_id   Int
-
-   category      categories @relation(fields: [category_id], references: [id])
-   product   products @relation(fields: [product_id], references: [id])
-
-  @@id([category_id, product_id])
+model Payment_Method {
+  id          Int            @id @default(autoincrement())
+  paymentName String
+  transaction Transactions[]
 }
