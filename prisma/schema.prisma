@@ -11,20 +11,22 @@ datasource db {
 }
 
 model users {
-  id          Int            @id @default(autoincrement())
-  username    String?        @db.VarChar(255)
-  email       String?        @db.VarChar(255)
-  password    String?        @db.VarChar(255)
-  avatar      String?        @db.VarChar(255)
-  role        roles          @relation(fields: [roleId], references: [id])
+  id          Int           @id @default(autoincrement())
+  username    String
+  email       String   
+  password    String   
+  phoneNumber String
+  address     String        @db.VarChar(1000) 
+  avatar      String        @db.VarChar(1000) 
+  role        roles         @relation(fields: [roleId], references: [id])
   roleId      Int
-  transaction transactions[]
+  transaction transactions []
 }
 
 model roles {
-  id   Int     @id @default(autoincrement())
-  role String? @db.VarChar(255)
-  user users[]
+  id          Int            @id @default(autoincrement())
+  roleName    String         @db.VarChar(255)
+  user        users[]
 }
 
 model transactions {
