@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import routerProduct from "./routes/productRouter";
 
+
 import dotenv from "dotenv";
 dotenv.config({
     path: path.resolve(__dirname, "../.env"),
