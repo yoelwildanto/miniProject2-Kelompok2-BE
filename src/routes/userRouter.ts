@@ -1,5 +1,5 @@
-import { Express } from "express";
-const router = express.Router();
+import Express  from "express";
+const router = Express.Router();
 
 import userControllers from "../controllers/userControllers";
 // import multer = require("../");

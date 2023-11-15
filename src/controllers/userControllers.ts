@@ -5,8 +5,8 @@ const createUserController = async (req: Request, res:
 Response) => {
     try {
         const { username, email, password, phoneNumber, address,
-        avatar, roleId } =
-            req.body;
+        avatar, roleId } = req.body;
+        const numRoleId = Number(roleId);
 
         const result = await userService.createUserService(
             username, 
