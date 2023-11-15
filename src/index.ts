@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import routerProduct from "./routes/productRouter";
+import routerCategory from "./routes/categoryRouter";
 
 
 import dotenv from "dotenv";
@@ -14,6 +15,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/product", routerProduct);
+app.use("/category", routerCategory);
 
 app.listen(port, () => {
     console.log(`server started on port ${port}`);

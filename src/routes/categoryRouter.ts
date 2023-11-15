@@ -1,11 +1,11 @@
 import express from "express";
-const router = express.Router();
+const routerCategory = express.Router();
 
 import categoryController from "../controllers/categoryController";
 import multer from "../middleware/multer";
 
-router.post("/", multer.uploadCategoryFile, categoryController.createCategoryController)
-router.get("/", categoryController.getCategoryAllController)
-router.patch("/update/:categoryId", multer.uploadCategoryFile, categoryController.updateCategoryController)
+routerCategory.post("/", multer.uploadCategoryFile, categoryController.createCategoryController)
+routerCategory.get("/", categoryController.getCategoryAllController)
+routerCategory.patch("/update/:categoryId", multer.uploadCategoryFile, categoryController.updateCategoryController)
 
-export = router;
+export = routerCategory;
