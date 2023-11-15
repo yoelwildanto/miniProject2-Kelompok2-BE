@@ -16,6 +16,7 @@ app.use(express.json());
 
 app.use("/product", routerProduct);
 app.use("/category", routerCategory);
+// app.use("/report", routerReport)
 
 app.listen(port, () => {
     console.log(`server started on port ${port}`);
