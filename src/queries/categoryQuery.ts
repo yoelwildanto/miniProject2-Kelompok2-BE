@@ -39,18 +39,32 @@ const findCategoryQuery = async (categoryId: number) => {
 };
 
 const updateCategoryQuery = async (
-  categoryName: string,
-  image: string,
-  categoryId: number
+  categoryId: number,
+  categoryName: string | undefined,
+  image: string
 ) => {
   try {
+    const data: Record<string, any> = {};
+    if (categoryName !== undefined) data.categoryName = categoryName;
+    if (image !== undefined) data.image = image;
+
     const res = await prisma.categories.updateMany({
       where: {
         id: categoryId,
       },
-      data: {
-        categoryName: categoryName,
-        image: image,
+      data: data,
+    });
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const deleteCategoryQuery = async (categoryId: number) => {
+  try {
+    const res = await prisma.categories.delete({
+      where: {
+        id: categoryId,
       },
     });
     return res;
@@ -64,4 +78,5 @@ export = {
   getCategoryAllQuery,
   findCategoryQuery,
   updateCategoryQuery,
+  deleteCategoryQuery,
 };
