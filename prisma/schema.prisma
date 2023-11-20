@@ -26,6 +26,7 @@ model Users {
   avatar      String @db.VarChar(1000)
   role        Roles  @relation(fields: [roleId], references: [id])
   roleId      Int
+  transaction   Transactions[]
 }
 
 model Categories {
@@ -59,6 +60,8 @@ model Products {
 
 model Transactions {
   id                  Int                   @id @default(autoincrement())
+  user            Users     @relation(fields: [userId], references: [id])
+  userId          Int
   date                DateTime              @default(now())
   totalQuantity       Int
   totalPrice          Decimal               @db.Decimal(10, 0)

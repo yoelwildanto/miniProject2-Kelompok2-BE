@@ -9,14 +9,14 @@ const getTransactionGraphService = async () => {
     }
 }
 
-// const getTransactionAllService =async (startDate: string, endDate: string) => {
-//     try {
-//         const res = await reportQuery.getTransactionAllQuery(startDate, endDate)
-//         return res
-//     } catch (err) {
-//        throw err 
-//     }
-// }
+const getTransactionAllService =async (page: number, pageSize: number, startDate: string, endDate: string) => {
+    try {
+        const res = await reportQuery.getTransactionAllQuery(page, pageSize, startDate, endDate)
+        return res
+    } catch (err) {
+       throw err 
+    }
+}
 
 const getTransactionDetailService =async (transactionId:number) => {
     try {
@@ -36,9 +36,30 @@ const getBestSellerTransactionService =async () => {
     }
 }
 
+const getUserAllService =async (page: number, pageSize: number, username: string,) => {
+    try {
+        const res = await reportQuery.getUserAllQuery(page, pageSize, username)
+        return res
+    } catch (err) {
+        throw err
+    }
+}
+
+const getUserIdService =async (userId: number, page: number, pageSize: number, startDate: string, endDate: string) => {
+    try {
+        const res = await reportQuery.getUserIdQuery(userId, page, pageSize, startDate, endDate)
+        return res
+    } catch (err) {
+       throw err 
+    }
+}
+
+
 export = {
     getTransactionGraphService,
-    // getTransactionAllService,
+    getTransactionAllService,
     getTransactionDetailService,
     getBestSellerTransactionService,
+    getUserAllService,
+    getUserIdService
 }
