@@ -82,9 +82,23 @@ const updateProductQuery = async (
   }
 };
 
+const findProductCategoryQuery = async (categoryId:number)  => {
+  try {
+      const res = await prisma.products.findFirst({
+          where: {
+              categoryId: categoryId,
+            },
+      })
+      return res
+  } catch (err) {
+      throw err
+  }
+}
+
 export = {
   createProductQuery,
   getProductAllQuery,
   findProductQuery,
   updateProductQuery,
+  findProductCategoryQuery
 };
